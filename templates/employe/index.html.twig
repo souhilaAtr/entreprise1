@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des employes{% endblock %}
+
+{% block body %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">nom</th>
+            <th scope="col">prenom</th>
+            <th scope="col">salaire</th>
+            <th scope="col">service</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for employe in employes %}
+        <tr class="table-success">
+            <th>{{employe.nom}}</th>
+            <td>{{employe.prenom}}</td>
+            <td>{{employe.salaire}}</td>
+            <td>{{employe.service}}</td>
+            {# <td><a href="{{path(),{id:emplye.id}}}">modifier l'employe</a></td> #}
+        </tr>
+    {% endfor %}
+  
+    </tbody>
+</table>
+
+
+
+{% endblock %}
