@@ -23,12 +23,15 @@ class EmployeController extends AbstractController
         ]);
     }
 
-
+    #[Route("/employe/edit/{id}", name: "edit_employe")]
     #[Route("/employe/add", name: "add_employe")]
-    public function add(ManagerRegistry $doctrine, Request $request)
+    public function add(ManagerRegistry $doctrine, Request $request, Employe $employe = null)
     {
 
-        $employe = new Employe();
+        if (!$employe) {
+            $employe = new Employe();
+        }
+        
         $from = $this->createForm(EmployeType::class, $employe);
         $from->handleRequest($request);
 
@@ -39,8 +42,7 @@ class EmployeController extends AbstractController
             $manger->flush();
             return $this->redirectToRoute("app_employe");
         }
-
-
+            
         return $this->render('employe/add.html.twig', [
             "formulaire" => $from->createView()
         ]);
@@ -48,23 +50,21 @@ class EmployeController extends AbstractController
 
 
 
-    // modification d'un employe
 
 
-    #[Route("/employe/modifier/{id}", name: "edit_employe")]
-    public function edit(ManagerRegistry $doctrine, Request $request, Employe $employe)
+
+
+
+
+
+
+
+    #[Route("/employe/supprimer/{id}", name: "supprimer_employe")]
+    public function supprimer(ManagerRegistry $doctrine, Employe $employe)
     {
-        // dd($employe);
-        $form = $this->createForm(EmployeType::class, $employe);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $manager = $doctrine->getManager();
-            $manager->persist($employe);
-            $manager->flush();
-            return $this->redirectToRoute("app_employe");
-        }
-        return $this->render("employe/edit.html.twig", [
-            "formulaireEdit" => $form->createView()
-        ]);
+        $repository = $doctrine->getManager();
+        $repository->remove($employe);
+        $repository->flush();
+        return $this->redirectToRoute("app_employe"); // redirige vers la page d'accueil
     }
 }
