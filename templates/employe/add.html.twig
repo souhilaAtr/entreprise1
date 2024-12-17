@@ -5,7 +5,12 @@
 {{form_start(formulaire)}}
 
 {{form_widget(formulaire)}}
-
+{% if vrai == true %}
+<button type="submit">Modifier</button>
+{% else %}
 <button type="submit">Ajouter</button>
+{% endif %}
+
+
 {{form_end(formulaire)}}
 {% endblock %}

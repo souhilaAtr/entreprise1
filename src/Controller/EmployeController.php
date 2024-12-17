@@ -42,9 +42,13 @@ class EmployeController extends AbstractController
             $manger->flush();
             return $this->redirectToRoute("app_employe");
         }
-            
+        $vrai = false;
+if($employe->getId() != null){
+        $vrai = true;
+}
         return $this->render('employe/add.html.twig', [
-            "formulaire" => $from->createView()
+            "formulaire" => $from->createView(),
+            "vrai" => $vrai
         ]);
     }
 
