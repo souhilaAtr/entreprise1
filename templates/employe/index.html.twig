@@ -13,16 +13,18 @@
         </tr>
     </thead>
     <tbody>
-    {% for employe in employes %}
+        {% for employe in employes %}
         <tr class="table-success">
             <th>{{employe.nom}}</th>
             <td>{{employe.prenom}}</td>
             <td>{{employe.salaire}}</td>
             <td>{{employe.service}}</td>
-            {# <td><a href="{{path(),{id:emplye.id}}}">modifier l'employe</a></td> #}
+            <td><a href="{{path('edit_employe',{'id':employe.id})}}">modifier l'employe</a></td>
+
+            <td><a href="{{path('supprimer_employe',{'id':employe.id})}}">supprimer l'employe</a></td>
         </tr>
-    {% endfor %}
-  
+        {% endfor %}
+
     </tbody>
 </table>
 

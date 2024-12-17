@@ -45,4 +45,26 @@ class EmployeController extends AbstractController
             "formulaire" => $from->createView()
         ]);
     }
+
+
+
+    // modification d'un employe
+
+
+    #[Route("/employe/modifier/{id}", name: "edit_employe")]
+    public function edit(ManagerRegistry $doctrine, Request $request, Employe $employe)
+    {
+        // dd($employe);
+        $form = $this->createForm(EmployeType::class, $employe);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $doctrine->getManager();
+            $manager->persist($employe);
+            $manager->flush();
+            return $this->redirectToRoute("app_employe");
+        }
+        return $this->render("employe/edit.html.twig", [
+            "formulaireEdit" => $form->createView()
+        ]);
+    }
 }
